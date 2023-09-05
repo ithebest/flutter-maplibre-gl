@@ -7,7 +7,7 @@ part of maplibre_gl;
 typedef void OnMapClickCallback(Point<double> point, LatLng coordinates);
 
 typedef void OnFeatureInteractionCallback(
-    dynamic id, Point<double> point, LatLng coordinates);
+    dynamic id, dynamic feature, Point<double> point, LatLng coordinates);
 
 typedef void OnFeatureDragnCallback(dynamic id,
     {required Point<double> point,
@@ -62,10 +62,22 @@ class MaplibreMapController extends ChangeNotifier {
   }) : _mapboxGlPlatform = mapboxGlPlatform {
     _cameraPosition = initialCameraPosition;
 
-    _mapboxGlPlatform.onFeatureTappedPlatform.add((payload) {
+    _mapboxGlPlatform.onFeatureTappedPlatform.add((payload) async {
+      final queryRenderedFeatures =
+          await _mapboxGlPlatform.queryRenderedFeatures(
+        payload["point"],
+        [],
+        null,
+      );
+
       for (final fun
           in List<OnFeatureInteractionCallback>.from(onFeatureTapped)) {
-        fun(payload["id"], payload["point"], payload["latLng"]);
+        fun(
+          payload["id"],
+          queryRenderedFeatures.isNotEmpty ? queryRenderedFeatures.first : null,
+          payload["point"],
+          payload["latLng"],
+        );
       }
     });
 

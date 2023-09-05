@@ -8,12 +8,12 @@ dependencies:
     sdk: flutter
   maplibre_gl_platform_interface:
     git:
-      url: https://github.com/maplibre/flutter-maplibre-gl.git
+      url: https://github.com/ithebest/flutter-maplibre-gl.git
       path: maplibre_gl_platform_interface
       ref: main
   maplibre_gl_web:
     git:
-      url: https://github.com/maplibre/flutter-maplibre-gl.git
+      url: https://github.com/ithebest/flutter-maplibre-gl.git
       path: maplibre_gl_web
       ref: main
 
@@ -36,6 +36,6 @@ flutter:
 
 environment:
   # Flutter 2.15 is the required min to be able to use Enum.name
-  sdk: '>=2.15.0 <3.0.0'
+  sdk: '>=2.15.0 <4.0.0'
   flutter: ">=2.8.1"
 

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:maplibre_gl/mapbox_gl.dart';
@@ -41,6 +43,20 @@ class FullMapState extends State<FullMap> {
 
   _onMapCreated(MaplibreMapController controller) {
     this.controller = controller;
+
+    controller.onFeatureTapped.add(onFeatureTap);
+  }
+
+  void onFeatureTap(dynamic featureId, dynamic feature, Point<double> point, LatLng latLng) {
+    final snackBar = SnackBar(
+      content: Text(
+        'Tapped feature with id $featureId and ${feature?['properties']}',
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+    );
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   static Future<void> addRaster(MaplibreMapController controller) async {
